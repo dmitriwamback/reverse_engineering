@@ -7,15 +7,17 @@ bool compare(char name[]) {
     return strcmp(pass, name) != 0;
 }
 
+void printline() {
+    printf("------------------------------------------\n");
+}
+
 int main() {
 
     char name[120];
-    printf("------------------------------------------\n");
-    printf("------------------------------------------\n");
+    printline(); printline();
     printf("Insert Key: ");
     fgets(name, 120, stdin);
     if (compare(name)) { printf("Invalid key. Exiting process...\n"); return 0; }
     printf("Access Gained!\n");
-    printf("------------------------------------------\n");
-    printf("------------------------------------------\n");
+    printline(); printline();
 }
