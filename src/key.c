@@ -12,13 +12,6 @@
 
 #define SocketAddress struct sockaddr
 
-char* pass = "]H(WIO|_))W(--0-0{W{D]]]][]pkOWADOPHPWAD4923hd93w-1pqlOHO-0-\n";
-char pass_hash[120] = "";
-
-bool compare(char name[]) {
-    return strcmp(pass, name) != 0;
-}
-
 void printline() {
     printf("------------------------------------------\n");
 }
@@ -33,7 +26,7 @@ int main() {
 
         printf("Insert Key: ");
         fgets(name, 120, stdin);
-        if (!compare(name)) { printf("Access Granted.\n"); break; }
+        if (strcmp("]H(WIO|_))W(--0-0{W{D]]]][]pkOWADOPHPWAD4923hd93w-1pqlOHO-0-\n", name) == 0) { printf("Access Granted.\n"); break; }
         printf("Invalid Key. %i attempts remaining...\n", 10 - attempts);
         printline();
         attempts++;
