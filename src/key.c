@@ -12,7 +12,9 @@
 
 #define SocketAddress struct sockaddr
 
-char pass[120] = "]H(WIO|_))W(--0-0{W{D]]]][]pkOWADOPHPWAD4923hd93w-1pqlOHO-0-\n";
+char* pass = "]H(WIO|_))W(--0-0{W{D]]]][]pkOWADOPHPWAD4923hd93w-1pqlOHO-0-\n";
+char pass_hash[120] = "";
+
 bool compare(char name[]) {
     return strcmp(pass, name) != 0;
 }
@@ -25,10 +27,21 @@ int main() {
 
     char name[120];
     printline(); printline();
-    printf("Insert Key: ");
-    fgets(name, 120, stdin);
-    if (compare(name)) { printf("Invalid Key. Exiting Process...\n"); return 0; }
-    printf("Access Granted.\n");
+    int attempts = 1;
+
+    while (true) {
+
+        printf("Insert Key: ");
+        fgets(name, 120, stdin);
+        if (!compare(name)) { printf("Access Granted.\n"); break; }
+        printf("Invalid Key. %i attempts remaining...\n", 10 - attempts);
+        printline();
+        attempts++;
+        if (attempts == 11) {
+            printf("Attempted login failiure, exiting program.");
+            return -1;
+        }
+    }
 
     int socketfile, connection;
     struct sockaddr_in serveraddr, client;
@@ -39,7 +52,7 @@ int main() {
     serveraddr.sin_addr.s_addr  = inet_addr("127.0.0.1");
     serveraddr.sin_port         = htons(8080);
 
-    if (connect(socketfile, (SocketAddress*)&serveraddr, sizeof(serveraddr))) printf("Connected to server\n");
+    if (connect(socketfile, (SocketAddress*)&serveraddr, sizeof(serveraddr)) != 0) printf("Connected to server\n");
 
     printline(); printline();
 }

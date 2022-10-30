@@ -29,5 +29,4 @@ int main() {
 
     connection = accept(socketfile, (SocketAddress*)&client, &length);
     printf("Connection\n");
-    
 }
