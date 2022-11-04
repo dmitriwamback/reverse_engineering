@@ -9,6 +9,8 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <unistd.h>
+
 
 #define SocketAddress struct sockaddr
 
@@ -43,9 +45,19 @@ int main() {
     bzero(&serveraddr, sizeof(serveraddr));
     serveraddr.sin_family       = AF_INET;
     serveraddr.sin_addr.s_addr  = inet_addr("127.0.0.1");
-    serveraddr.sin_port         = htons(8080);
+    serveraddr.sin_port         = htons(8050);
 
-    if (connect(socketfile, (SocketAddress*)&serveraddr, sizeof(serveraddr)) != 0) printf("Connected to server\n");
+    printf("Connected\n");
+    if (connect(socketfile, (SocketAddress*)&serveraddr, sizeof(serveraddr)) != 0) printf("Connection ended\n");
+    else {
+        char buf[1024];
+        int n;
+        //while ((buf[n++] = getchar()) != '\n');
+
+        bzero(buf, sizeof(buf));
+        read(socketfile, buf, sizeof(buf));
+        printf("%s\n", buf);
+    }
 
     printline(); printline();
 }
